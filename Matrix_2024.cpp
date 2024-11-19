@@ -31,6 +31,13 @@ static std::pair<double, double> run_test(MyMatrix& M, int number_of_threads) {
 }
 
 static void run_tests(std::vector<int> Ns, std::vector<int> num_threads, std::string path) {
+	if (not fs::path(path).is_absolute())
+	{
+		fs::path current_file_path = __FILE__;
+		auto current_dir = current_file_path.parent_path().string();
+		path = current_dir + "\\" + path;
+	}
+
 	std::ofstream out(path);
 	assert(out.is_open() && "Ошибка открытия файла");
 
@@ -48,17 +55,7 @@ static void run_tests(std::vector<int> Ns, std::vector<int> num_threads, std::st
 		}
 	}
 
-	if (fs::path(path).is_absolute())
-	{
-		std::cout << "The solution is saved in: " << path << std::endl;
-	}
-	else
-	{
-		fs::path current_file_path = __FILE__;
-		auto current_dir = current_file_path.parent_path().string();
-		std::cout << "\nThe solution is saved in: " << current_dir << "\\" << path << "\n\n";
-	}
-
+	std::cout << "The solution is saved in: " << path << std::endl;
 	out.close();
 }
 
