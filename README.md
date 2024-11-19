@@ -88,5 +88,5 @@
 ---
 ## Полученные результаты
 
-Результаты моих запусков расположены в [`output`](https://github.com/Vsevolod86/Matrix_2024/blob/main/output)
-Оформленный в единый отчет - [`results.md`](output/results.md)
+Результаты моих запусков расположены в [`output`](https://github.com/Vsevolod86/Matrix_2024/blob/main/output),
+оформленный в единый отчет - [`results.md`](output/results.md)
