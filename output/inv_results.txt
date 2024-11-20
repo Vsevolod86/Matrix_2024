@@ -1,4 +1,4 @@
-N,number_of_threads,err_inv,dt_inv
+N,number_of_threads,err_inv,time
 10,1,1.57659e-12,12800
 10,2,1.57659e-12,133800
 10,3,1.57659e-12,217600

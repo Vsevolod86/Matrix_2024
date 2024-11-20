@@ -149,7 +149,8 @@ MyMatrix MyMatrix::operator*(const MyMatrix& that) const
 #pragma omp parallel for
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < that.m; j++)
-			for (int t = 0; t < m; t++) result.M[i][j] += M[i][t] * that.M[t][j];
+			for (int t = 0; t < m; t++) 
+				result.M[i][j] += M[i][t] * that.M[t][j];
 	return result;
 }
 
