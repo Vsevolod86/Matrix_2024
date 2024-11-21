@@ -118,10 +118,21 @@ double MyMatrix::inf_norma() const
 MyMatrix MyMatrix::operator-() const
 {//ÓÍÀÐÍÛÉ ÌÈÍÓÑ
 	MyMatrix result(n, m);
+	if (n > m)
+	{
 #pragma omp parallel for
-	for (int i = 0; i < n; i++)
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < m; j++)
+				result.M[i][j] = -M[i][j];
+	}
+	else
+	{
+#pragma omp parallel for
 		for (int j = 0; j < m; j++)
-			result.M[i][j] = -M[i][j];
+			for (int i = 0; i < n; i++)
+				result.M[i][j] = -M[i][j];
+
+	}
 	return result;
 }
 
@@ -135,10 +146,20 @@ MyMatrix MyMatrix::operator+(const MyMatrix& that) const
 {//ÑËÎÆÅÍÈÅ ÌÀÒÐÈÖ
 	assert(((m == that.m) && (n == that.n)) && "Error sum");
 	MyMatrix result(n, m);
+	if (n > m)
+	{
 #pragma omp parallel for
-	for (int i = 0; i < n; i++)
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < m; j++)
+				result.M[i][j] = M[i][j] + that.M[i][j];
+	}
+	else
+	{
+#pragma omp parallel for
 		for (int j = 0; j < m; j++)
-			result.M[i][j] = M[i][j] + that.M[i][j];
+			for (int i = 0; i < n; i++)
+				result.M[i][j] = M[i][j] + that.M[i][j];
+	}
 	return result;
 }
 
@@ -146,11 +167,23 @@ MyMatrix MyMatrix::operator*(const MyMatrix& that) const
 {//ÏÐÎÈÇÂÅÄÅÍÈÅ ÌÀÒÐÈÖ
 	assert((m == that.n) && "Error mult");
 	MyMatrix result(n, that.m);
+	if (result.n > result.m)
+	{
 #pragma omp parallel for
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < that.m; j++)
-			for (int t = 0; t < m; t++) 
-				result.M[i][j] += M[i][t] * that.M[t][j];
+		for (int i = 0; i < result.n; i++)
+			for (int j = 0; j < result.m; j++)
+				for (int t = 0; t < m; t++)
+					result.M[i][j] += M[i][t] * that.M[t][j];
+	}
+	else
+	{
+#pragma omp parallel for
+		for (int j = 0; j < result.m; j++)
+			for (int i = 0; i < result.n; i++)
+				for (int t = 0; t < m; t++)
+					result.M[i][j] += M[i][t] * that.M[t][j];
+
+	}
 	return result;
 }
 
